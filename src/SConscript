@@ -1,0 +1,9 @@
+from building import *
+
+cwd     = GetCurrentDir()
+src     = Glob('*.c')
+CPPPATH = [cwd + '/../inc']
+
+group = DefineGroup('flash_blob', src, depend = ['PKG_USING_FLASH_BLOB'], CPPPATH = CPPPATH)
+
+Return('group')
