@@ -32,20 +32,9 @@ Agile Upgrade 遵循 `Apache-2.0` 许可，详见 `LICENSE` 文件。
 ## 2、使用 flash_blob
 1. 在rtthread软件包中找到flash_blob，然后添加进工程。
 
-2. 通过tools文件下的工具，生成对应的xxx.FLM.c文件，将xxx.FLM.c添加进工程，如果有多个flash器件，可以连续添加。
-
-
-![](https://img-blog.csdnimg.cn/e6c2d314ec024033bcf64015220e3f17.png)
-
-
+2. 添加对应芯片的代码进工程，如果有多个flash器件，可以连续添加。
 
 注意：多个设备的话每个flash的FlashDevice 的设备起始地址不可重叠，flash抽象层根据地址，自动选择相应的驱动。
-
-
-
-3.  由于flash驱动需要占用“r9”寄存器，所以需要在编译选项中添加`-ffixed-r9`
-
-![在这里插入图片描述](https://img-blog.csdnimg.cn/78a368cc80b4459c84549da58569a496.png)
 
  以上步骤完成后，就可以快速使用了，例如将YMODEM接收到的数据，写到flash中，代码如下：
 
