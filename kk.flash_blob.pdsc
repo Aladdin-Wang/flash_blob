@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<package schemaVersion="1.7.28" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/v1.7.28/schema/PACK.xsd">
+  <vendor>kk</vendor>
+  <name>flash_blob</name>
+  <description>A circular queue library written in C that supports arbitrary types.</description>
+  <url>https://github.com/Aladdin-Wang/flash_blob/</url>
+  <supportContact>https://github.com/Aladdin-Wang/flash_blob/issues</supportContact>
+  <license>LICENSE</license>
+
+  <!-- optional license file -->
+  <!-- <license></license> -->
+
+  <repository type="git">https://github.com/Aladdin-Wang/flash_blob.git</repository>
+
+  <releases>
+    <!--automatically generated content, please do not modify -->
+    <release version="9.9.9" tag="9.9.9">
+      Active development ...
+    </release>
+    <!-- automatically generated content, please do not modify -->
+    <release date="2023-12-11" version="1.0.1" tag="1.0.1" >
+      Initial release of flash_blob.
+    </release>
+  </releases>
+
+  <keywords>
+    <!-- keywords for indexing -->
+    <keyword>Circular Queue</keyword>
+    <keyword>C Language</keyword>
+    <keyword>Data Structures</keyword>
+  </keywords>
+  
+  <components>
+    <!-- flash_blob 组件 -->
+    <component Cclass="Software" Cversion="1.0.1" Cgroup="flash_blob" >
+      <description>A circular queue library written in C that supports arbitrary types.</description>
+      <files>
+        <file category="header" name="flash_blob.h"/>
+        <file category="sourceC" name="flash_blob.c"/>
+      </files>
+    </component>
+	
+  </components>
+
+  <!-- optional taxonomy section for defining new component Class and Group names -->
+  <taxonomy>
+    <description Cclass="Software" Cgroup="flash_blob" doc="documents/Doxygen/html/index.html">A circular queue library written in C that supports arbitrary types.</description>
+  </taxonomy>
+</package>
