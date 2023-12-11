@@ -22,11 +22,14 @@
     <release date="2023-12-11" version="1.0.1" tag="1.0.1" >
       Initial release of flash_blob.
     </release>
+    <release date="2023-01-09" version="1.0.0" tag="1.0.0" >
+      Initial release of flash_blob.
+    </release>	
   </releases>
 
   <keywords>
     <!-- keywords for indexing -->
-    <keyword>Circular Queue</keyword>
+    <keyword>FLASH</keyword>
     <keyword>C Language</keyword>
     <keyword>Data Structures</keyword>
   </keywords>
@@ -36,8 +39,8 @@
     <component Cclass="Software" Cversion="1.0.1" Cgroup="flash_blob" >
       <description>A circular queue library written in C that supports arbitrary types.</description>
       <files>
-        <file category="header" name="flash_blob.h"/>
-        <file category="sourceC" name="flash_blob.c"/>
+        <file category="header" name="inc/flash_blob.h"/>
+        <file category="sourceC" name="src/flash_blob.c"/>
       </files>
     </component>
 	

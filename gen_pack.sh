@@ -39,8 +39,8 @@ PACK_DIRS="
 #
  PACK_BASE_FILES="
    LICENSE
-   ./src/flash_blob.c
-   ./inc/flash_blob.h
+   flash_blob.c
+   flash_blob.h
    README.md
  "
 
