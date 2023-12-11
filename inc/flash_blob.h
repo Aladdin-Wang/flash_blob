@@ -5,50 +5,10 @@
 #include <stdbool.h>
 #include <string.h>
 
-#ifndef RT_NULL
-#define RT_NULL                         (0)
-struct rt_slist_node
-{
-    struct rt_slist_node *next;                         /**< point to next node. */
-};
-typedef struct rt_slist_node rt_slist_t;                /**< Type for single list. */
-
-
-#define rt_container_of(ptr, type, member) \
-    ((type *)((char *)(ptr) - (unsigned long)(&((type *)0)->member)))
-
-#define RT_SLIST_OBJECT_INIT(object) { RT_NULL }
-
-
-static __inline void rt_slist_init(rt_slist_t *l)
-{
-    l->next = RT_NULL;
-}
-
-static __inline void rt_slist_append(rt_slist_t *l, rt_slist_t *n)
-{
-    struct rt_slist_node *node;
-
-    node = l;
-    while (node->next) node = node->next;
-
-    /* append the node to the tail */
-    node->next = n;
-    n->next = RT_NULL;
-}
-
-
-#define rt_slist_entry(node, type, member) \
-    rt_container_of(node, type, member)
-
-
-#define rt_slist_for_each(pos, head) \
-    for (pos = (head)->next; pos != RT_NULL; pos = pos->next)
-
+#ifndef __ATOM_CODE
+    #include "perf_counter.h"
+    #define __ATOM_CODE  __IRQ_SAFE
 #endif
-
-
-
 
 #define VERS       1           // Interface Version 1.01
 
@@ -91,21 +51,20 @@ typedef struct {
     int32_t (*UnInit)(uint32_t fnc);
     int32_t (*EraseChip)(void);
     int32_t (*EraseSector)(uint32_t adr);
-    int32_t (*ProgramPage)(uint32_t adr, uint32_t sz, uint8_t* buf);
+    int32_t (*Program)(uint32_t adr, uint32_t sz, uint8_t* buf);
     int32_t (*Read)(uint32_t adr, uint32_t sz, uint8_t* buf);
 } flash_ops_t;
 
-typedef struct {
-    flash_ops_t tFlashops;
+typedef struct flash_blob_t flash_blob_t;
+typedef struct flash_blob_t{
     flash_dev_t const *ptFlashDev;
-    rt_slist_t slist;
+    flash_ops_t tFlashops;
 } flash_blob_t;
-
 
 extern void flash_dev_register(flash_blob_t *ptFlashDevice);
 extern bool target_flash_init(uint32_t addr);
 extern bool target_flash_uninit(uint32_t addr);
-extern int32_t target_flash_write(uint32_t addr, const uint8_t *buf, int32_t size);
-extern int32_t target_flash_erase(uint32_t addr, int32_t size);
-extern int32_t target_flash_read(uint32_t addr, uint8_t *buf, int32_t size);
+extern int32_t target_flash_write(uint32_t addr, const uint8_t *buf, size_t size);
+extern int32_t target_flash_erase(uint32_t addr, size_t size);
+extern int32_t target_flash_read(uint32_t addr, uint8_t *buf, size_t size);
 #endif
