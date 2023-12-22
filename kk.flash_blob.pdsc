@@ -3,7 +3,7 @@
 <package schemaVersion="1.7.28" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="https://raw.githubusercontent.com/Open-CMSIS-Pack/Open-CMSIS-Pack-Spec/v1.7.28/schema/PACK.xsd">
   <vendor>kk</vendor>
   <name>flash_blob</name>
-  <description>A circular queue library written in C that supports arbitrary types.</description>
+  <description>An abstraction layer for address-based FLASH management and operation.</description>
   <url>https://github.com/Aladdin-Wang/flash_blob/</url>
   <supportContact>https://github.com/Aladdin-Wang/flash_blob/issues</supportContact>
   <license>LICENSE</license>
@@ -36,8 +36,8 @@
   
   <components>
     <!-- flash_blob 组件 -->
-    <component Cclass="Software" Cversion="1.0.1" Cgroup="flash_blob" >
-      <description>A circular queue library written in C that supports arbitrary types.</description>
+    <component Cclass="WALI_FrameWork" Cversion="1.0.1" Cgroup="flash_blob" >
+      <description>An abstraction layer for address-based FLASH management and operation.</description>
       <files>
         <file category="header" name="inc/flash_blob.h"/>
         <file category="sourceC" name="src/flash_blob.c"/>
@@ -48,6 +48,6 @@
 
   <!-- optional taxonomy section for defining new component Class and Group names -->
   <taxonomy>
-    <description Cclass="Software" Cgroup="flash_blob" doc="documents/Doxygen/html/index.html">A circular queue library written in C that supports arbitrary types.</description>
+    <description Cclass="WALI_FrameWork" Cgroup="flash_blob" doc="documents/Doxygen/html/index.html">An abstraction layer for address-based FLASH management and operation.</description>
   </taxonomy>
 </package>
