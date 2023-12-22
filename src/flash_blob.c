@@ -1,15 +1,35 @@
+/****************************************************************************
+*  Copyright 2022 KK (https://github.com/WALI-KANG)                                    *
+*                                                                           *
+*  Licensed under the Apache License, Version 2.0 (the "License");          *
+*  you may not use this file except in compliance with the License.         *
+*  You may obtain a copy of the License at                                  *
+*                                                                           *
+*     http://www.apache.org/licenses/LICENSE-2.0                            *
+*                                                                           *
+*  Unless required by applicable law or agreed to in writing, software      *
+*  distributed under the License is distributed on an "AS IS" BASIS,        *
+*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. *
+*  See the License for the specific language governing permissions and      *
+*  limitations under the License.                                           *
+*                                                                           *
+****************************************************************************/
 #include "flash_blob.h"
+#include "flash_blob_cfg.h"
+/* Array containing flash devices and their configurations */
+static const flash_blob_t * const flash_table[] = FLASH_DEV_TABLE;
 
-extern const  flash_blob_t  onchip_flash_device;
-
-static const flash_blob_t * const flash_table[] = 
-{
-    &onchip_flash_device
-};
-
+/* Length of the flash_table array */
 static const size_t flash_table_len = sizeof(flash_table) / sizeof(flash_table[0]);
 
-const flash_blob_t *  flash_dev_find(uint32_t addr)
+/*
+ * Function: flash_dev_find
+ * Description: Finds the flash device based on the specified address.
+ * Parameters:
+ *   - addr: Flash memory address to find.
+ * Returns: Pointer to the flash_blob_t structure if found, NULL otherwise.
+ */
+static const flash_blob_t *  flash_dev_find(uint32_t addr)
 {
     for (uint16_t i = 0; i < flash_table_len; i++) {
         if(addr >= flash_table[i]->ptFlashDev->DevAdr &&
@@ -20,7 +40,13 @@ const flash_blob_t *  flash_dev_find(uint32_t addr)
 
     return NULL;
 }
-
+/*
+ * Function: target_flash_init
+ * Description: Initializes the flash memory based on the specified address.
+ * Parameters:
+ *   - addr: Flash memory address to initialize.
+ * Returns: True if initialization is successful, false otherwise.
+ */
 bool target_flash_init(uint32_t addr)
 {
     if (addr % 4 != 0) {
@@ -37,7 +63,13 @@ bool target_flash_init(uint32_t addr)
 
     return false;
 }
-
+/*
+ * Function: target_flash_uninit
+ * Description: Uninitializes the flash memory based on the specified address.
+ * Parameters:
+ *   - addr: Flash memory address to uninitialize.
+ * Returns: True if uninitialization is successful, false otherwise.
+ */
 bool target_flash_uninit(uint32_t addr)
 {
     const flash_blob_t *ptFlashDevice = flash_dev_find(addr);
@@ -49,12 +81,20 @@ bool target_flash_uninit(uint32_t addr)
 
     return true;
 }
-
+/*
+ * Function: target_flash_write
+ * Description: Writes data to the flash memory.
+ * Parameters:
+ *   - addr: Flash memory address to start writing.
+ *   - buf: Pointer to the data to be written.
+ *   - size: Number of bytes to write.
+ * Returns: Number of bytes actually written.
+ */
 int target_flash_write(uint32_t addr, const uint8_t *buf, size_t size)
 {
     const flash_blob_t *ptFlashDevice = flash_dev_find(addr);
 
-    __ATOM_CODE{
+    safe_atom_code(){
         if(ptFlashDevice != NULL) {
             if (addr % 4 != 0) {
                 /*addr must be 4-byte alignment*/
@@ -83,11 +123,20 @@ int target_flash_write(uint32_t addr, const uint8_t *buf, size_t size)
     return size;
 }
 
+/*
+ * Function: target_flash_read
+ * Description: Reads data from the flash memory.
+ * Parameters:
+ *   - addr: Flash memory address to start reading.
+ *   - buf: Pointer to store the read data.
+ *   - size: Number of bytes to read.
+ * Returns: Number of bytes actually read.
+ */
 int target_flash_read(uint32_t addr, uint8_t *buf, size_t size)
 {
     const flash_blob_t *ptFlashDevice = flash_dev_find(addr);
 
-    __ATOM_CODE{
+    safe_atom_code(){
         if(ptFlashDevice != NULL) {
             if (addr % 4 != 0) {
                 /*addr must be 4-byte alignment*/
@@ -118,13 +167,21 @@ int target_flash_read(uint32_t addr, uint8_t *buf, size_t size)
     return size;
 }
 
+/*
+ * Function: target_flash_erase
+ * Description: Erases a specified portion of the flash memory.
+ * Parameters:
+ *   - addr: Flash memory address to start erasing.
+ *   - size: Number of bytes to erase.
+ * Returns: Number of bytes actually erased.
+ */
 int target_flash_erase(uint32_t addr, size_t size)
 {
     size_t wSector = 0;
     size_t wEraseSize = 0;
     const flash_blob_t *ptFlashDevice = flash_dev_find(addr);
     if(ptFlashDevice != NULL) {
-		__ATOM_CODE{
+		safe_atom_code(){
 			if (size > ptFlashDevice->ptFlashDev->szDev) {
 				/*erase outrange flash size */
 				wEraseSize = 0;
